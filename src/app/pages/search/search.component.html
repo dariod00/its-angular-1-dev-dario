@@ -1,0 +1,44 @@
+<!-- Navbar con titolo app e bottone che mi porta alla Home -->
+<nav class="navbar bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">The cocktail DB</a>
+    <button class="btn btn-outline-success" type="submit" [routerLink]="'../home'">Home</button>
+  </div>
+</nav>
+
+<h1>Search</h1>
+
+<!-- uso ngModel per il doppio binding per poter passare la proprietà drinkName scritta nel component.ts -->
+<div class="container">
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-default">Drink name</span>
+    <input type="text" name="search" [(ngModel)]="drinkName" class="form-control" aria-label="Sizing example input"
+      aria-describedby="inputGroup-sizing-default">
+  </div>
+  <!-- genero tutti gli ingrediente utilizzando una select con la direttiva ngFor -->
+  <select class="form-select mb-3" [(ngModel)]="ingredientName">
+    <option *ngFor="let ingredientName of ingredients" [value]="ingredientName.strIngredient1">
+      {{ingredientName.strIngredient1}}
+    </option>
+  </select>
+  <!-- Al click del bottone viene effettuata la ricerca -->
+  <button class="btn btn-outline-success" type="submit" (click)="getDrinksByClick()">Search</button>
+</div>
+
+<!-- Mostra i drinks cercarti -->
+<h1>Drinks by search</h1>
+<div class="row">
+  <div class="col-sm-12 col-md-3 col-lg-4 my-2" *ngFor="let drink of drinks">
+    <div class="card">
+      <img [src]="drink.strDrinkThumb" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{ drink.strDrink}}</h5>
+        <!-- bottone che mi porta al dettaglio della carta -->
+        <button class="btn btn-primary" [routerLink]="'/drink/' + drink.idDrink">Dettaglio</button>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">{{ drink.strCategory }}</small>
+      </div>
+    </div>
+  </div>
+</div>
